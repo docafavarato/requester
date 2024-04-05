@@ -42,7 +42,7 @@
                      <children>
                         <ScrollPane prefHeight="516.0" prefWidth="876.0" style="-fx-border-color: none; -fx-background-color: transparent; -fx-border-width: 0px;">
                            <content>
-                              <TextArea fx:id="paramsTextArea" prefHeight="513.0" prefWidth="873.0" style="-fx-text-fill: yellow; -fx-border-color: none;" stylesheets="@util/textarea.css">
+                              <TextArea fx:id="paramsTextArea" prefHeight="513.0" prefWidth="873.0" style="-fx-text-fill: #60B3E5; -fx-border-color: none;" stylesheets="@util/textarea.css">
                                  <font>
                                     <Font name="JetBrains Mono Regular" size="14.0" />
                                  </font>

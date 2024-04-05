@@ -112,17 +112,29 @@ public class ViewController implements Initializable {
 			
 			case "PUT":
 				try {
+					String params = paramsTextArea.getText();
 					HttpURLConnection con = (HttpURLConnection) url.openConnection();
 					con.setRequestMethod("PUT");
-					BufferedReader in = new BufferedReader(new InputStreamReader(con.getInputStream()));
-					String inputLine;
-					StringBuffer content = new StringBuffer();
-					while ((inputLine = in.readLine()) != null) {
-						content.append(inputLine);
+					con.setRequestProperty("Content-Type", "application/json");
+					con.setDoOutput(true);
+					
+					try (java.io.OutputStream os = con.getOutputStream()) {
+			            byte[] input = params.getBytes("utf-8");
+			            os.write(input, 0, input.length);
+			        }
+					
+					StringBuilder answer;
+					try (BufferedReader in = new BufferedReader(new InputStreamReader(con.getInputStream()))) {
+						String inputLine;
+						answer = new StringBuilder();
+						while ((inputLine = in.readLine()) != null) {
+							answer.append(inputLine);
+						}
 					}
-					JsonElement je = JsonParser.parseString(content.toString());
+					
+					JsonElement je = JsonParser.parseString(answer.toString());
 					resultTextArea.setText(gson.toJson(je));
-					in.close();
+					
 				} catch (IOException e) {
 					Alerts.showAlert("Error", null, e.getMessage(), AlertType.ERROR);
 				}
