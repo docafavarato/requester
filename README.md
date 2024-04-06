@@ -5,6 +5,11 @@
 
 Requester is a Java application designed to perform HTTP requests to URLs. It allows you to easily perform requests with parameters and visualize the responses in a clean way.
 
+# Requirements
+- <a href="https://www.oracle.com/java/technologies/javase/jdk20-archive-downloads.html">Java 20.0.1</a>
+- <a href="https://gluonhq.com/products/javafx/">JavaFX SDK 17.0.10</a>
+- <a href="https://search.maven.org/artifact/com.google.code.gson/gson/2.10/jar">Gson 2.10</a>
+
 # Performing HTTP requests
   - ## GET
     - Select the "GET" method, insert the URL and click "Send". The response area will be update with an indented ```JSON``` object.
