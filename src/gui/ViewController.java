@@ -1,11 +1,11 @@
 package gui;
 
 import java.io.BufferedReader;
-import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
+import java.net.ProtocolException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -58,6 +58,10 @@ public class ViewController implements Initializable {
 			Alerts.showAlert("No method selected", null, "No HTTP method was selected.", AlertType.WARNING);
 		}
 		
+		if (httpRequestTextField.getText() == null) {
+			Alerts.showAlert("No URL", null, "No URL was passed.", AlertType.WARNING);
+		}
+		
 		try {
 			URL url = new URL(httpRequestTextField.getText());
 			
@@ -93,14 +97,15 @@ public class ViewController implements Initializable {
 			            os.write(input, 0, input.length);
 			        }
 					
-					StringBuilder answer;
+					StringBuilder answer = new StringBuilder();;
 					try (BufferedReader in = new BufferedReader(new InputStreamReader(con.getInputStream()))) {
 						String inputLine;
-						answer = new StringBuilder();
 						while ((inputLine = in.readLine()) != null) {
 							answer.append(inputLine);
 						}
-					}
+					} catch (Exception e) {
+			        	Alerts.showAlert("Error", null, e.getMessage(), AlertType.ERROR);
+			        }
 					
 					JsonElement je = JsonParser.parseString(answer.toString());
 					resultTextArea.setText(gson.toJson(je));
@@ -121,12 +126,13 @@ public class ViewController implements Initializable {
 					try (java.io.OutputStream os = con.getOutputStream()) {
 			            byte[] input = params.getBytes("utf-8");
 			            os.write(input, 0, input.length);
+			        } catch (Exception e) {
+			        	Alerts.showAlert("Error", null, e.getMessage(), AlertType.ERROR);
 			        }
 					
-					StringBuilder answer;
+					StringBuilder answer = new StringBuilder();
 					try (BufferedReader in = new BufferedReader(new InputStreamReader(con.getInputStream()))) {
 						String inputLine;
-						answer = new StringBuilder();
 						while ((inputLine = in.readLine()) != null) {
 							answer.append(inputLine);
 						}
@@ -138,6 +144,26 @@ public class ViewController implements Initializable {
 				} catch (IOException e) {
 					Alerts.showAlert("Error", null, e.getMessage(), AlertType.ERROR);
 				}
+				break;
+			
+			case "DELETE":
+				try {
+					HttpURLConnection con = (HttpURLConnection) url.openConnection();
+					con.setRequestMethod("DELETE");
+					BufferedReader in = new BufferedReader(new InputStreamReader(con.getInputStream()));
+					String inputLine;
+					StringBuffer content = new StringBuffer();
+					while ((inputLine = in.readLine()) != null) {
+						content.append(inputLine);
+					}
+					JsonElement je = JsonParser.parseString(content.toString());
+					resultTextArea.setText(gson.toJson(je));
+					in.close();
+				} catch (IOException e) {
+					Alerts.showAlert("Erro", null, e.getMessage(), AlertType.ERROR);
+				}
+				
+				break;
 			}
 		} catch (MalformedURLException e) {
 			Alerts.showAlert("Error", null, e.getMessage(), AlertType.ERROR);
@@ -152,6 +178,8 @@ public class ViewController implements Initializable {
 		resultTextArea.textProperty().addListener((observable, oldValue, newValue) -> {
             updateLineCount(newValue);
         });
+	
+		paramsTextArea.setText("{\n    \"key\": \"value\",\n}");
 	}
 	
 	private void updateLineCount(String text) {
