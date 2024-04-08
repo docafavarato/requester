@@ -1,11 +1,13 @@
 package gui;
 
+import java.awt.Toolkit;
+import java.awt.datatransfer.Clipboard;
+import java.awt.datatransfer.StringSelection;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
-import java.net.ProtocolException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -36,6 +38,9 @@ public class ViewController implements Initializable {
 	
 	@FXML
 	private Button sendRequestButton;
+	
+	@FXML
+	private Button copyAllButton;
 	
 	@FXML
 	private TextArea resultTextArea;
@@ -165,6 +170,7 @@ public class ViewController implements Initializable {
 				
 				break;
 			}
+			tabResponseParams.getSelectionModel().select(0);
 		} catch (MalformedURLException e) {
 			Alerts.showAlert("Error", null, e.getMessage(), AlertType.ERROR);
 		}
@@ -182,6 +188,26 @@ public class ViewController implements Initializable {
 		paramsTextArea.setText("{\n    \"key\": \"value\",\n}");
 	}
 	
+	@FXML
+	private void onCopyAllButtonAction() {
+		int index = tabResponseParams.getSelectionModel().getSelectedIndex();
+		String result = "";
+		if (index == 0) {
+			result = resultTextArea.getText();
+		} else if (index == 1) {
+			result = paramsTextArea.getText();
+		}
+		
+		if (result != "") {
+			Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
+			clipboard.setContents(new StringSelection(result), null);
+			Alerts.showAlert("Text copied", null, "All text was successfully copied to the clipboard.", AlertType.INFORMATION);
+		} else {
+			Alerts.showAlert("Nothing to copy", null, "There is no content to copy.", AlertType.WARNING);
+		}
+		
+	}
+	
 	private void updateLineCount(String text) {
         String[] lines = text.split("\n");
         int lineCount = lines.length;
@@ -191,9 +217,16 @@ public class ViewController implements Initializable {
 	private void updateStyles() {
 		final String HOVERED_BUTTON_STYLE = "-fx-background-color: #0854bc; -fx-text-fill: white; -fx-font-weight: bold; -fx-font-size: 16px;";
 		final String IDLE_BUTTON_STYLE = "-fx-background-color: #0864d4; -fx-text-fill: white; -fx-font-weight: bold; -fx-font-size: 16px;";
+		final String HOVERED_SMALL_BUTTON_STYLE = HOVERED_BUTTON_STYLE.replace("-fx-font-size: 16px", "-fx-font-size: 12px");
+		final String IDLE_SMALL_BUTTON_STYLE = IDLE_BUTTON_STYLE.replace("-fx-font-size: 16px", "-fx-font-size: 12px");
+		
+		
 		sendRequestButton.setStyle(IDLE_BUTTON_STYLE);
 		sendRequestButton.setOnMouseEntered(e -> sendRequestButton.setStyle(HOVERED_BUTTON_STYLE));
 		sendRequestButton.setOnMouseExited(e -> sendRequestButton.setStyle(IDLE_BUTTON_STYLE));
+		copyAllButton.setStyle(IDLE_SMALL_BUTTON_STYLE);
+		copyAllButton.setOnMouseEntered(e -> copyAllButton.setStyle(HOVERED_SMALL_BUTTON_STYLE));
+		copyAllButton.setOnMouseExited(e -> copyAllButton.setStyle(IDLE_SMALL_BUTTON_STYLE));
 		tabResponseParams.setTabMinHeight(35);
 		tabResponseParams.setTabMinWidth(60);
 	}

@@ -80,5 +80,13 @@
 			</cursor>
 		</Button>
 		<Label layoutX="160.0" layoutY="55.0" text="URL to perform HTTP request" textFill="GREY" />
+      <Button fx:id="copyAllButton" alignment="CENTER" contentDisplay="CENTER" layoutX="85.0" layoutY="704.0" minHeight="20.0" mnemonicParsing="false" onAction="#onCopyAllButtonAction" prefHeight="30.0" prefWidth="70.0" style="-fx-text-alignment: center; -fx-border-radius: 10px; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-color: #0864d4;" text="Copy all">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+         <effect>
+            <Glow level="0.28" />
+         </effect>
+      </Button>
 	</children>
 </AnchorPane>
