@@ -12,7 +12,7 @@ Requester is a Java application designed to perform HTTP requests to URLs. It al
 
 # Performing HTTP requests
   - ## GET
-    - Select the "GET" method, insert the URL and click "Send". The response area will be update with an indented ```JSON``` object.
+    - Select the "GET" method, insert the URL and click "Send". The response area will be updated with an indented ```JSON``` object.
       
       ![image](https://github.com/docafavarato/requester/assets/98183878/b52996c8-e8d4-4abf-bf52-1cab485a3f96)
 
