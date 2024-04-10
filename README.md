@@ -14,17 +14,17 @@ Requester is a Java application designed to perform HTTP requests to URLs. It al
   - ## GET
     - Select the "GET" method, insert the URL and click "Send". The response area will be update with an indented ```JSON``` object.
       
-      ![image](https://github.com/docafavarato/requester/assets/98183878/d5750f90-ff25-41cb-8591-24e1e1a120b5)
+      ![image](https://github.com/docafavarato/requester/assets/98183878/b52996c8-e8d4-4abf-bf52-1cab485a3f96)
 
   - ## POST
     - Select the "POST" method, insert the URL and click "Send". Additionally, it is possible to add body params in the shape of a ```JSON``` object at the "Body params" area.
 
-      ![image](https://github.com/docafavarato/requester/assets/98183878/d03f498a-4a2e-4a28-b4ad-e73032bd374e)
+      ![image](https://github.com/docafavarato/requester/assets/98183878/e51721d2-7622-4a1b-b21a-b33f74d8e8e7)
 
   - ## PUT
     - Select the "PUT" method, insert the URL and click "Send". As in the "POST" section, it is also possible to add body params in the shape of ```JSON``` object.
 
-      ![image](https://github.com/docafavarato/requester/assets/98183878/f73835f7-414d-415f-9dc9-cba980e7a987)
+      ![image](https://github.com/docafavarato/requester/assets/98183878/faa8d2d5-2486-45d9-ba07-f1f84f99faf9)
 
   - ## DELETE
     - Select the "DELETE" method, insert the URL and click "Send".
